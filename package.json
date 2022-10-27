@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "start-prod": "NODE_ENV=production node ./src/server.js",
+    "start-dev": "nodemon ./src/server.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,7 @@
   },
   "dependencies": {
     "@hapi/hapi": "^20.2.2",
-    "nanoid": "^3.1.20"
+    "nanoid": "^3.1.20",
+    "nodemon": "2.0.15"
   }
 }
