@@ -1,4 +1,6 @@
 const { nanoid } = require("nanoid")
+const InvariantError = require("../../exeptions/InvariantError")
+const NotFoundError = require("../../exeptions/NotFoundError")
 
 class NotesService{
     constructor(){
@@ -17,7 +19,7 @@ class NotesService{
         
         const isSuccess = this._notes.filter((note) => note.id === id).length > 0
         if (!isSuccess){
-            throw new Error('Catatan gagal ditambahkan')
+            throw new InvariantError('Catatan gagal ditambahkan')
         }
         return id
     }
@@ -29,7 +31,7 @@ class NotesService{
     getNodeById(id){
         const note = this._notes.filter((n) => n.id === id)[0]
         if (!note){
-            throw new Error('Catatan tidak ditemukan')
+            throw new NotFoundError('Catatan tidak ditemukan')
         }
         return note
     }
@@ -37,7 +39,7 @@ class NotesService{
     editNoteById(id, [ title, body, tags ]){
         const index = this._notes.findIndex((note) => note.id === id)
         if (!index){
-            throw new Error('Gagal memperbarui data')
+            throw new NotFoundError('Gagal memperbarui data, Id tidak ditemukan')
         }
         const updateAt = new Date().toISOString()
         this._notes[index] = {
@@ -52,7 +54,7 @@ class NotesService{
     deleteNoteById(id){
         const index = this._notes.findIndex((note) => note.id === id)
         if (!index){
-            throw new Error('Catatan gagal dihapus')
+            throw new NotFoundError('Catatan gagal dihapus')
         }
         this._notes.splice(index, 1)
     }
